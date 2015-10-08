@@ -1,13 +1,13 @@
-title: "blog title"
+title: "Between lines"
 author: "Jose Talens"
-description: "Really cool blog about ... something"
+description: ""
 #subheading: "Really cool blog about ... something"
 more: "read more"
 url: "http://jltalens.github.io"
 #baseurl: "/contrast" # comment out if in root directory
 
-#comments:
-#    disqus: "niklasbuschmann"
+comments:
+    disqus: "jltalens"
 #    isso: "comments.mysite.org"
 
 style:
