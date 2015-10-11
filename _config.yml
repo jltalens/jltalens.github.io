@@ -7,7 +7,7 @@ url: "http://jltalens.github.io"
 #baseurl: "/contrast" # comment out if in root directory
 
 comments:
-    disqus: "jltalens"
+    disqus: "jltalensgithubio"
 #    isso: "comments.mysite.org"
 
 style:
@@ -29,4 +29,4 @@ links:
 paginate: 10
 excerpt_separator: "\n\n\n" # excerpt ends after two blank lines
 defaults: [{scope: {path: ""}, values: {layout: "default"}}, {scope: {path: "", type: "posts"}, values: {comments: true}}]
-#gems: [jekyll-feed] # include feed plugin (supported by gh-pages)
+gems: [jekyll-feed] # include feed plugin (supported by gh-pages)
