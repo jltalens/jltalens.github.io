@@ -11,16 +11,16 @@ A few days ago I read this interesting tweet in my streamline.
   <p lang="en" dir="ltr">i&#39;ve started practicing what i preach Re: inline funcs vs func decls, and also func decls at end (and hoisted) instead of at top of scope.</p>&mdash; getify (@getify) <a href="https://twitter.com/getify/status/651473332957638656">octubre 6, 2015</a></blockquote>
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-There's a thing there that I've been practicing lately, taking advantage of the function hosting in JS to move my function declarations right after the `return` statements. I'll show an example in a moment but first let's clarify what hoisting is:
+That's a thing there that I've been practicing lately, taking advantage of the function hosting in JS to move my function declarations right after the `return` statements. I'll show you an example in a moment but first let's see what hoisting is:
 
 What is hosting?
 --------------
 
-If we have a look at the mozilla dev's doc (really good for JS/HTML reference) about [hoisting](https://developer.mozilla.org/en-US/docs/Glossary/Hoisting):
+If we have a look at the mozilla's dev docs (really good for JS/HTML reference) about [hoisting](https://developer.mozilla.org/en-US/docs/Glossary/Hoisting):
 
 > In JavaScript, functions and variables are hoisted. Hoisting is JavaScript's behavior of moving declarations to the top of a scope (the global scope or the current function scope).
 
-So no matter were I declare my function, it will be moved to the top of the scope:
+No matter were I declare my functions, they will be moved to the top of the scope of where they were declared:
 
 {% highlight javascript %}
 hello(); // logs "hello!"
@@ -30,16 +30,19 @@ function hello() {
 }
 {% endhighlight %}
 
-Be aware that *only* the declaration is moved so this will result in an error:
+Be aware that *only* the declarations are moved, not assignations.
+Executing the next code will result in an error:
 
 {% highlight javascript %}
 aFunction(); // undefined is not a function
 var aFunction = function() {
   console.log("hello!");
 }
-/*
-Effectively the code above is "seen" as:
-*/
+{% endhighlight %}
+
+The code above is equivalent to this one:
+
+{% highlight javascript %}
 var aFunction;
 
 aFunction();
@@ -52,13 +55,15 @@ aFunction = function() {
 
 Now how can we use this to improve how our code looks like?
 
-Moving function declarations at the end
+Moving functions declarations at the end
 --------------------------------------
 
-How many times have you opened a JS module to understand what is going on? What's the first thing you're interested?
-A well written module should expose some methods for others to use, isn't?
+A well written code should express clearly what its doing.
+When you write your modules you should be thinking about how the users are going to interact with it, no matter if the users are other modules in your application.
 
-Usually you have to scroll all the way down till the return statement, and probably it's returning a function result, some object, etc so I have to scroll again all the way up to find what is returning exactly:
+One way, I do believe, it helps is by moving your return statement as high as possible in your code, by doing this you're pushing the readers attention towards what your module is exposing.
+
+Let's take the next code as an example of what you usually see in a JS codebase:
 
 {% highlight javascript %}
 function doSomething() {
@@ -75,7 +80,7 @@ function doSomething() {
 }
 {% endhighlight %}
 
-Now imagine the `doSomething` function spans across dozens of lines, is there anyway you can say what is returning? you might rely solely on its name to figure it out unless you start looking for the return statement.
+Now let's imagine the `doSomething` function spans across dozens of lines, is there any way you can say what's the output? you'll to rely solely on its name to figure it out unless you start scrolling down till you find the return statement.
 
 This is how I would rewrite it:
 
@@ -94,4 +99,4 @@ function doSomething {
 }
 {% endhighlight %}
 
-By abusing of the hoisting we moved all the declarations right after the return statement. Now the first thing you see is what it's expected from this function. No matter how complex `returnOneObject` or `returnAnotherObject` might be, with a good naming some other developer can picture what this function is doing and returning.
+By abusing of the hoisting we moved all the declarations right after the return ending with a more understandable code.
